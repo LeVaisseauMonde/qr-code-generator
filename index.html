@@ -453,7 +453,7 @@
     <div id="bc-navbar"></div>
 
     <div class="container">
-
+        <a href="../index.html" class="back-link">← RETOUR_SYSTÈME</a>
         
         <header class="header">
             <div class="header-small">// BLACKCROW_OS / TOOLS / MATRIX.QR</div>
@@ -551,10 +551,19 @@
         let logoDataUrl = null;
         let qrInstance = null;
 
-        // Charger la navbar partagée
+        // Charger la navbar partagée + détecter lien actif après injection
         fetch('https://levaisseaumonde.github.io/BlackCrow/navbar.html')
             .then(r => r.text())
-            .then(html => { document.getElementById('bc-navbar').innerHTML = html; })
+            .then(html => {
+                document.getElementById('bc-navbar').innerHTML = html;
+                // Détection lien actif
+                var current = window.location.href;
+                document.querySelectorAll('.bc-nav a').forEach(function(link) {
+                    if (current.indexOf(link.getAttribute('href').replace(/\/$/, '')) !== -1) {
+                        link.classList.add('bc-active');
+                    }
+                });
+            })
             .catch(() => {});
 
         const urlInput = document.getElementById('urlInput');
